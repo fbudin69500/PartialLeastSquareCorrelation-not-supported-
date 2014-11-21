@@ -1,0 +1,26 @@
+README
+
+Publications:
+[1] Partial Least Squares Methods: Partial Least Squares Correlation and Partial Least Square Regression. Herve Abdi and Lynne J. Williams
+[2] A new statistical method for testing hypotheses of neuropsychological/MRI relationships in schizophrenia: partial least squares analysis. Paul G. Nestor, Brian F. O'Donnell, Robert W. McCarley,Margaret Niznikiewicz, John Barnard, Zi Jen Shen, Fred L. Bookstein, Martha E. Shenton
+[3] Spatiotemporal analysis of event-related fMRI data using partial least squares. A.R. McIntosh, W.K. Chau, and A.B. Protzner
+[4] Large-Scale Functional Connectivity in Associative Learning: Interrelations of the Rat Auditory, Visual, and Limbic Systems. A. R. Mcintosh and F. Gonzalez-Lima
+[5] Partial Least Squares (PLS) methods for neuroimaging: A tutorial and review. Anjali Krishnan, Lynne J. Williams, Anthony Randal McIntosh, Hervé Abdi
+
+Usage:
+
+Input parameters:
+-Matrix containing all the data. Each row contains the measurements associated to one individual. Each column contains the measurements (Behavior/Imaging/...).
+-Groups the data belongs to. Use a sequence of integers. This is used to plot the data a colors and shape per group.
+-Groups used to normalize the data. Use a sequence of integers. One may want to normalize their data per group, or the entire dataset.
+-Last column index of the image measurements in the data matrix. The behavior measurements are in the following columns.
+-Number of permutations to use for the permutation test (this number is also used to set the number of sampling for the bootstrap)
+-Names of the measurements
+
+Examples:
+[probaInertia,probaSingularValue,Percent]=PLS(AllDataWithoutCFPreshock,NormGroups,NormGroups,splitIndex,10000,namesWithoutCFPreshock)
+[probaInertia,probaSingularValue,Percent]=PLS(AllManualDataWithoutCFPreshock,NormGroupsManual,NormGroupsManual,splitIndexManual,10000,manualNamesWithoutCFPreshock)
+
+
+ 
+
