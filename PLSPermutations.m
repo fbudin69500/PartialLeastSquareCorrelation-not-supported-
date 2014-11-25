@@ -24,14 +24,17 @@ function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutations(X,Y
     InertiaPerm(end+1)=Inertia;
     sorted=sort(InertiaPerm);
     index=find(sorted == Inertia );
-    probaInertia=1-(index-1)/nbPerm;
+    probaInertia=1-(index-2)/nbPerm;
     %Significance of singular values
-    SingularValues(:,end+1)=OriginalSingularValues;
+    %SingularValues(:,end+1)=OriginalSingularValues;
     probaSingularValue=zeros(1,nbSingularValues);
-    SingularValuesVec=reshape(SingularValues,nbSingularValues*(nbPerm+1),1);
-    sorted=sort(SingularValuesVec);
+    SingularValuesVec=reshape(SingularValues,nbSingularValues*nbPerm,1);
+    
     for j=1:nbSingularValues
+        LoopSingularValuesVec=SingularValuesVec;
+        LoopSingularValuesVec(end+1,1)=OriginalSingularValues(j,1);
+        sorted=sort(LoopSingularValuesVec);
         index=find(sorted == OriginalSingularValues(j,1),1 );
-        probaSingularValue(1,j)=1-index/(nbSingularValues*(nbPerm+1));
+        probaSingularValue(1,j)=1-(index-2)/(nbSingularValues*nbPerm);
     end
 end
