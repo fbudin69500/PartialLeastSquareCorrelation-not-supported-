@@ -1,4 +1,4 @@
-function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutations(X,Y,S,nbPerm)
+function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm)
     OriginalSingularValues=sum(S,2);
     nbSingularValues=min(size(S));
     OriginalSingularValues(nbSingularValues+1:size(OriginalSingularValues))=[];
@@ -27,12 +27,12 @@ function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutations(X,Y
     probaInertia=1-(index-2)/nbPerm;
     %Significance of singular values
     probaSingularValue=zeros(1,nbSingularValues);
-    SingularValuesVec=reshape(SingularValues,nbSingularValues*nbPerm,1);
     for j=1:nbSingularValues
-        LoopSingularValuesVec=SingularValuesVec;
-        LoopSingularValuesVec(end+1,1)=OriginalSingularValues(j,1);
+        %LoopSingularValuesVec=SingularValuesVec;
+        LoopSingularValuesVec=SingularValues(j,:);
+        LoopSingularValuesVec(1,end+1)=OriginalSingularValues(j,1);
         sorted=sort(LoopSingularValuesVec);
         index=find(sorted == OriginalSingularValues(j,1),1 );
-        probaSingularValue(1,j)=1-(index-2)/(nbSingularValues*nbPerm);
+        probaSingularValue(1,j)=1-(index-2)/nbPerm;
     end
 end
