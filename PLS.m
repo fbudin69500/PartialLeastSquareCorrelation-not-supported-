@@ -5,7 +5,8 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames]=PLS
     R = Y'*X;
     [U,S,V]=svd(R);
     %Permutations
-    [probaInertia,probaSingularValue,Percent]=PLSPermutations(X,Y,S,nbPerm);
+    [probaInertia,probaSingularValue,Percent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm);
+    %[probaInertia,probaSingularValue,Percent]=PLSPermutations(X,Y,S,nbPerm);
     %Find singular values that are below a threshold (p<0.05)
     sI=find(probaSingularValue < 0.05  );
     maxSI=max(sI);
