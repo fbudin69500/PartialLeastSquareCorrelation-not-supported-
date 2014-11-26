@@ -18,8 +18,10 @@ function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,G
         continue
     end
     Rboot=Yboot'*Xboot;
-    [Uboot,~,Vboot]=svd(Rboot);
-    %Uboot=Rboot*V*pinv(S);
+    %[Uboot,~,Vboot]=svd(Rboot);
+    invS=pinv(S);
+    Uboot=Rboot*V*invS;
+    Vboot=(invS*U'*Rboot)';
     Uall(i,:,:)=Uboot(:,1:maxSI);
     Vall(i,:,:)=Vboot(:,1:maxSI);
   end

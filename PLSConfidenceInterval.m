@@ -8,6 +8,8 @@ function [Mratio,MConfInf,MConfSup]=PLSConfidenceInterval(M,Mall,sampling)
   %http://www.losmedanos.edu/Groups/Math/documents/FormulaSheetTable.pdf
   %1.962 corresponds to a confidence interval of 95% with 1000 degrees of
   %freedom
-  MConfInf=Mmeanresh-1.962/sqrt(sampling)*Mstdresh;
-  MConfSup=Mmeanresh+1.962/sqrt(sampling)*Mstdresh;
+  %MConfInf=Mmeanresh-1.962/sqrt(sampling)*Mstdresh;
+  %MConfSup=Mmeanresh+1.962/sqrt(sampling)*Mstdresh;
+  MConfInf=Mmeanresh-1.962*Mstdresh;%Mstdresh seems to be the standard error??? so we do not divide by sqrt(N)
+  MConfSup=Mmeanresh+1.962*Mstdresh;
 end
