@@ -1,4 +1,4 @@
-function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,V]=PLS(Data,Groups,GroupNorm,splitIndex,nbPerm,names)
+function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,V,Lx,Ly]=PLS(Data,Groups,GroupNorm,splitIndex,nbPerm,names)
     %Normalizing data
     [X,Y]=PLSNormalizeData(Data,GroupNorm,splitIndex);
     %PLS
