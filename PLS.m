@@ -1,12 +1,15 @@
-function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,V,Lx,Ly]=PLS(Data,Groups,GroupNorm,splitIndex,nbPerm,names)
+function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,V,Lx,Ly]=PLS(Data,Groups,GroupNorm,splitIndex,nbPerm,names,ProbaPerVector)
     %Normalizing data
     [X,Y]=PLSNormalizeData(Data,GroupNorm,splitIndex);
     %PLS
     R = Y'*X;
     [U,S,V]=svd(R);
     %Permutations
-    %[probaInertia,probaSingularValue,Percent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm);
-    [probaInertia,probaSingularValue,Percent]=PLSPermutations(X,Y,S,nbPerm);
+    if ProbaPerVector ~= 0
+      [probaInertia,probaSingularValue,Percent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm);
+    else
+      [probaInertia,probaSingularValue,Percent]=PLSPermutations(X,Y,S,nbPerm);
+    end
     %Find singular values that are below a threshold (p<0.05)
     sI=find(probaSingularValue < 0.05  );
     maxSI=max(sI);

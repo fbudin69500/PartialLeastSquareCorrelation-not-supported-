@@ -25,6 +25,6 @@ function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,G
     Uall(i,:,:)=Uboot(:,1:maxSI);
     Vall(i,:,:)=Vboot(:,1:maxSI);
   end
-  [Uratio,UConfInf,UConfSup]=PLSConfidenceInterval(U(:,1:maxSI),Uall,sampling);
-  [Vratio,VConfInf,VConfSup]=PLSConfidenceInterval(V(:,1:maxSI),Vall,sampling);
+  [Uratio,UConfInf,UConfSup]=PLSConfidenceInterval(U(:,1:maxSI),Uall,sampling,1);
+  [Vratio,VConfInf,VConfSup]=PLSConfidenceInterval(V(:,1:maxSI),Vall,sampling,1);
 end
