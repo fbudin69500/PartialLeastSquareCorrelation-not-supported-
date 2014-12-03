@@ -1,9 +1,9 @@
-function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,Groups,splitIndex,U,V,S,sampling,maxSI)
+function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,Groups,splitIndex,U,V,S,sampling,sI)
 %sampling with replacement
   nbColumns=size(Data,2);
   Usize=nbColumns-splitIndex;
-  Uall=zeros(sampling,Usize,maxSI);
-  Vall=zeros(sampling,splitIndex,maxSI);
+  Uall=zeros(sampling,Usize,size(sI,2));
+  Vall=zeros(sampling,splitIndex,size(sI,2));
   for i=1:sampling
     r=randi([1 size(Data,1)],1,size(Data,1));
     DataSampled=Data(r,1:nbColumns);
@@ -22,9 +22,9 @@ function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,G
     invS=pinv(S);
     Uboot=Rboot*V*invS;
     Vboot=(invS*U'*Rboot)';
-    Uall(i,:,:)=Uboot(:,1:maxSI);
-    Vall(i,:,:)=Vboot(:,1:maxSI);
+    Uall(i,:,:)=Uboot(:,sI);
+    Vall(i,:,:)=Vboot(:,sI);
   end
-  [Uratio,UConfInf,UConfSup]=PLSConfidenceInterval(U(:,1:maxSI),Uall,sampling,1);
-  [Vratio,VConfInf,VConfSup]=PLSConfidenceInterval(V(:,1:maxSI),Vall,sampling,1);
+  [Uratio,UConfInf,UConfSup]=PLSConfidenceInterval(U(:,1:size(sI,2)),Uall,sampling,0);
+  [Vratio,VConfInf,VConfSup]=PLSConfidenceInterval(V(:,1:size(sI,2)),Vall,sampling,0);
 end
