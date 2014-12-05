@@ -1,4 +1,4 @@
-function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutations(X,Y,S,nbPerm)
+function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutations(X,Y,S,nbPerm,U,V)
     OriginalSingularValues=sum(S,2);
     nbSingularValues=min(size(S));
     OriginalSingularValues(nbSingularValues+1:size(OriginalSingularValues))=[];
@@ -12,7 +12,7 @@ function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutations(X,Y
     InertiaPerm=zeros(1,nbPerm);
     SingularValues=zeros(nbSingularValues,nbPerm);
     for j=1:nbPerm
-        [i,s,xp]=MyPermute(X,Y);
+        [i,s,xp]=MyPermute(X,Y,U,V,S);
         s2=sum(s,2);
         s2(nbSingularValues+1:size(s2))=[];
         InertiaPerm(j)=i;
