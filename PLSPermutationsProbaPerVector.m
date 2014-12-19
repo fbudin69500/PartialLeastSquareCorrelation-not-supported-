@@ -1,7 +1,7 @@
-function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm,U,V,Groups,splitIndex)
-    OriginalSingularValues=sum(S,2);
-    nbSingularValues=min(size(S));
-    OriginalSingularValues(nbSingularValues+1:size(OriginalSingularValues))=[];
+function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm,Groups)
+    OriginalSingularValues=sum(S,2);%Transform square matrix to vector
+    nbSingularValues=min(size(S));%compute vector length
+    OriginalSingularValues(nbSingularValues+1:size(OriginalSingularValues))=[];%Resize Singular value vector to remove trailing 0's
     TotSq=sum(OriginalSingularValues.^2);
     %percentage of variance explained by the correspond-ing pairs of latent variables
     Percent=OriginalSingularValues.^2./TotSq;
@@ -12,7 +12,7 @@ function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutationsProb
     InertiaPerm=zeros(1,nbPerm);
     SingularValues=zeros(nbSingularValues,nbPerm);
     for j=1:nbPerm
-        [i,s,xp]=MyPermute(X,Y,Groups,splitIndex);
+        [i,s,xp]=MyPermute(X,Y,Groups);
         s2=sum(s,2);
         s2(nbSingularValues+1:size(s2))=[];
         InertiaPerm(j)=i;

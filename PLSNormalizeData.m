@@ -1,5 +1,4 @@
-function [X,Y]=PLSNormalizeData(data,Groups,splitIndex)
-    rowsSize=size(data,2);
+function [NormData]=PLSNormalizeData(data,Groups)
     nbgroups=max(Groups);
     for i=1:nbgroups
         index=find( Groups == i);
@@ -11,6 +10,4 @@ function [X,Y]=PLSNormalizeData(data,Groups,splitIndex)
             NormData=NormGroup;
         end
     end
-    X=NormData(:,1:splitIndex);
-    Y=NormData(:,splitIndex+1:end);
 end

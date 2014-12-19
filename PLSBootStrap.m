@@ -1,15 +1,18 @@
 function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,Groups,splitIndex,U,V,S,sampling,sI)
 %sampling with replacement
   nbColumns=size(Data,2);
-  Usize=nbColumns-splitIndex;
-  Uall=zeros(sampling,Usize,size(sI,2));
-  Vall=zeros(sampling,splitIndex,size(sI,2));
-  M=[U*S*V];
+  Uall=zeros(sampling,size(U,1),size(sI,2));
+  Vall=zeros(sampling,size(V,1),size(sI,2));
+  M=U*S*V;
   for i=1:sampling
     r=randi([1 size(Data,1)],1,size(Data,1));
     DataSampled=Data(r,1:nbColumns);
     GroupsSampled=Groups(r,1);
-    [Xboot,Yboot]=PLSNormalizeData(DataSampled,GroupsSampled,splitIndex);
+    normedData=PLSNormalizeData(DataSampled,GroupsSampled);
+    %Split data
+    Xboot=normedData(:,1:splitIndex);
+    Yboot=normedData(:,splitIndex+1:end);
+    RbootT=StackGroups(Xboot,Yboot,Groups);
     [x y]=find(isnan(Yboot));
     if size(x,1) ~= 0
         continue
@@ -18,7 +21,7 @@ function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,G
     if size(x,1) ~= 0
         continue
     end
-    RbootT=Yboot'*Xboot;
+    %RbootT=Yboot'*Xboot;
     %rotation correction
     [U2,S2,V2]=svd(RbootT'*M);
     R=U2*V2';
