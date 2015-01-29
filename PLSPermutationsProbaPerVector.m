@@ -13,10 +13,14 @@ function [probaInertia,probaSingularValue,CumulativePercent]=PLSPermutationsProb
     SingularValues=zeros(nbSingularValues,nbPerm);
     for j=1:nbPerm
         [i,s,xp]=MyPermute(X,Y,Groups);
-        s2=sum(s,2);
-        s2(nbSingularValues+1:size(s2))=[];
-        InertiaPerm(j)=i;
-        SingularValues(:,j)=s2;
+        if i < -1
+            j=j-1;
+        else
+          s2=sum(s,2);
+          s2(nbSingularValues+1:size(s2))=[];
+          InertiaPerm(j)=i;
+          SingularValues(:,j)=s2;
+        end
     end
     %Inertia of permutations
     %hist(InertiaPerm)
