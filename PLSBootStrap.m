@@ -23,7 +23,7 @@ function [Uratio,UConfInf,UConfSup,Vratio,VConfInf,VConfSup]=PLSBootStrap(Data,G
     end
     %RbootT=Yboot'*Xboot;
     %rotation correction
-    [U2,S2,V2]=svd(RbootT'*M);
+    [U2,S2,V2]=svd(RbootT'*M,'econ');
     R=U2*V2';
     Rboot=RbootT*R;
     invS=pinv(S);

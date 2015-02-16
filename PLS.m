@@ -11,7 +11,7 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,
     R=StackGroups(X,Y,Groups);
     %PLS
     %R = Y'*X;
-    [U,S,V]=svd(R);
+    [U,S,V]=svd(R,'econ');
     %Permutations
     if ProbaPerVector ~= 0
       [probaInertia,probaSingularValue,Percent]=PLSPermutationsProbaPerVector(X,Y,S,nbPerm,Groups);
@@ -36,7 +36,7 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,
             Uindex=Uindex+(k-1)*size(Y,2);
             Unames=PLSStable(Uratio(Uindex,:),UConfInf(Uindex,:),UConfSup(Uindex,:),UInputnames,i);
             for j =1:size(Unames,1)
-               UOutputnames{j,i+(k-1)*size(sIPlot,2)} = Unames{j,1};
+               UOutputnames{j,i*(nbgroups-1)+(k-1)} = Unames{j,1};
             end
         end
         Vnames=PLSStable(Vratio,VConfInf,VConfSup,VInputnames,i);
@@ -94,8 +94,9 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,
             end
         end
         subplot(size(sIPlot,2),1,n );
-        bar(Ureshaped(:,n));
+        bar(Ureshaped);
         title([' U ' num2str(sIPlot(n))]);
+        clear Ureshaped;
     end
     hold off
     

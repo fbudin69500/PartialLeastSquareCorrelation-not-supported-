@@ -6,7 +6,7 @@ Xp=X(p,1:sizeX(2));
 
 R=StackGroups(Xp,Y,Groups);
 try
-  [U,S,V]=svd(R);
+  [U,S,V]=svd(R,'econ');
   I=sum(sum(S));
 catch err
   I=-2;
