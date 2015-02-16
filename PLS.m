@@ -20,7 +20,8 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,
     end
     %Find singular values that are below a threshold (p<0.05)
     sI=find(probaSingularValue < 0.05  );
-    sIPlot=sI(:,1:5);
+    nbSignificant=min(5,size(sI,2));
+    sIPlot=sI(:,1:nbSignificant);
     %sI(:,5:end)=[];
     %Boostrap
     UOutputnames=0;
@@ -69,7 +70,7 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,
     PLSPlot(LxPlot,size(LxPlot,2),Groups, colors,'Lx=X*V');
     PLSPlot(LyPlot,size(LyPlot,2),Groups, colors,'Ly=Y*U');
     PLSPlotXY(LxPlot,LyPlot,size(LxPlot,2),Groups, colors,'Lx * Ly');
-    PLSPlotXY(Lx(:,1:5),Ly(:,1:5),5,Groups, colors,'Lx * Ly 5 first saliences');
+    PLSPlotXY(Lx(:,1:nbSignificant),Ly(:,1:nbSignificant),nbSignificant,Groups, colors,'Lx * Ly first saliences');
     %Plot LV
     figure('Name','LV - V');
     hold on
