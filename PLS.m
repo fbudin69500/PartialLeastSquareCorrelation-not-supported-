@@ -85,7 +85,7 @@ function [probaInertia,probaSingularValue,Percent,UOutputnames,VOutputnames,U,S,
     for n=1:size(sIPlot,2)
         for i=1:nbgroups
             Uindex=1:size(Y,2);
-            Uindex=Uindex*i;
+            Uindex=Uindex+size(Y,2)*(i-1);
             Uext=U(Uindex,sIPlot(n));
             if exist('Ureshaped','var')
                 Ureshaped=[Ureshaped,Uext];
